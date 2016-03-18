@@ -34,3 +34,13 @@ def seqence_valid?(password)
   end
   true
 end
+
+def engine(password)
+  length?(password)&&
+  lower?(password)&&
+  upper?(password)&&
+  non_alpha_num?(password)&&
+  numbers?(password)&&
+  contains_password?(password)&&
+  seqence_valid?(password)
+end
