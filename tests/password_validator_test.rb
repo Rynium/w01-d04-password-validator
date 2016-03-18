@@ -2,33 +2,65 @@ require "test_helper"
 require_relative "../lib/password_validator.rb"
 
 class PasswordValidatorTest < Minitest::Test
-  # We'll try a password with all-lower-case-letters
-  def test_rejects_all_lower_case_passwords
-    result = at_least_one_caps?("1abjils&a")
-    refute(result, "'1abjils&a' should be invalid because it contains no caps")
-    #assert(result == false, ".same message as above")
-  end
-
   # We try a password with a valid mix of upper and lower-case characters
-  def test_accepts_mixed_case_passwords
-    result = at_least_one_caps?("1Abjils&a")
-    assert(result, "'1Abjils&a' should be valid because it is mixed case")
+  def test_length1
+    result = length?("ryanstan")
+    assert(result, "'ryanstan' should be valid because it is 8 characters")
   end
 
-  # We try a password of 8 characters, expecting success
-  def test_accepts_password_of_8_characters
-    result = at_least_eight_characters?("1Abjils&")
-    assert(result, "'1ABjils&' has 8 characters, should be valid")
-  end
-  
-  # We try a password of only 7 characters, expecting rejection
-  def test_rejects_password_of_7_characters
-    result = at_least_eight_characters?("1Abils&")
-    refute(result, "'1ABils&' has 8 characters, should be valid")
+  def test_length2
+    result = length?("rynie11")
+    refute(result, "'rynie11' should be invalid, because it is only 7 characters")
   end
 
-  def test_valid_password
-    result = valid_password?("1Abils&a")
-    assert(result, "'1Abils&a' should be valid")
+  def test_lower1
+    result = lower?("RYANSTANTz")
+    assert(result, "RYANSTANTz should be valid because it contains a lower case letter")
   end
+
+  def test_lower2
+    result = lower?("RYANSTANTZ")
+    refute(result, "RYANSTANTZ should not be valid because it contains zero lower case letters")
+  end
+
+  def test_upper1
+    result = upper?("RYANSTANTz")
+    assert(result, "RYANSTANTz should be valid because it contains a lower case letter")
+  end
+
+  def test_upper2
+    result = upper?("ryanstantz")
+    refute(result, "'ryanstantz' should not be valid because it contains zero lower case letters")
+  end
+
+  def test_non_alpha_numeric1
+    result = non_alpha_num?("RYANSTANTz18**")
+    assert(result, "'RYANSTANTz18**' should be valid because it contains a lower case letter")
+  end
+
+  def test_non_alpha_numeric2
+    result = non_alpha_num?("ryaNStantz1")
+    refute(result, "'ryaNStantz1' should not be valid because it contains zero lower case letters")
+  end
+
+  def test_num1
+    result = numbers?("RYANSTANTz18**")
+    assert(result, "'RYANSTANTz18**' should be valid because it contains a lower case letter")
+  end
+
+  def test_num2
+    result = numbers?("ryaNStantz**")
+    refute(result, "'passwrd1' should not be valid because it contains zero lower case letters")
+  end
+
+  def test_contain_password1
+    result = contains_password?("passwrd1*")
+    assert(result, "'RYANSTANTz18**' should be valid because it contains a lower case letter")
+  end
+
+  def test_contain_password2
+    result = contains_password?("password1")
+    refute(result, "'password1' should not be valid because it contains zero lower case letters")
+  end
+
 end

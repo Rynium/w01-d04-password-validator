@@ -1,18 +1,25 @@
 require "pry"
 
-def valid_password?(password)
-  at_least_one_caps?(password) && 
-  at_least_eight_characters?(password) # &&
-  # at_least_one_lower_case?(password)
-end
-
-# Takes a string
-# Returns true or false depending on if the string has at least one capital
-# letter
-def at_least_one_caps?(password)
-  password != password.downcase
-end
-
-def at_least_eight_characters?(password)
+def length?(password)
   password.length >= 8
+end
+
+def lower?(password)
+  password.gsub(/[a-z]/, '') != password
+end
+
+def upper?(password)
+  password.gsub(/[A-Z]/, '') != password
+end
+
+def non_alpha_num?(password)
+  password.gsub(/[^a-zA-Z0-9]/, "") != password
+end
+
+def numbers?(password)
+  password.gsub(/[0-9]/, "") != password
+end
+
+def contains_password?(password)
+  password.gsub(/password/i, "") == password
 end
