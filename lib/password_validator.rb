@@ -23,3 +23,14 @@ end
 def contains_password?(password)
   password.gsub(/password/i, "") == password
 end
+
+def seqence_valid?(password)
+  i = 0
+  while i < (password.length - 2)
+    sequence1 = (password[i]+password[i+1]+password[i+2]).downcase
+    sequence2 = (password[i] + password[i].next + password[i].next.next).downcase
+    return false if sequence1 == sequence2
+    i+=1
+  end
+  true
+end
