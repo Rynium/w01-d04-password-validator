@@ -51,13 +51,15 @@ end
 #returns true if password contains upper case letters.
 def seqence_valid?(password)
   i = 0
-  while i < (password.length - 2)
-    sequence1 = (password[i]+password[i+1]+password[i+2]).downcase
+  no_sequence = true
+  while i < (password.length - 2) && no_sequence
+    sequence1 = (password[i] + password[i+1] + password[i+2]).downcase
     sequence2 = (password[i] + password[i].next + password[i].next.next).downcase
-    return false if sequence1 == sequence2
+
+    no_sequence = false if sequence1 == sequence2
     i+=1
   end
-  true
+  no_sequence
 end
 
 #tests for valid password by running through all tests.
